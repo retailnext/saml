@@ -7,6 +7,7 @@ import (
 	"crypto"
 	"crypto/ecdsa"
 	"crypto/rsa"
+	"crypto/sha1" //nolint:gosec
 	"crypto/sha256"
 	"crypto/sha512"
 	"crypto/tls"
@@ -470,6 +471,9 @@ func parseCert(x509Data string) (*x509.Certificate, error) {
 
 func fingerprint(cert *x509.Certificate, fingerprintAlgorithm string) (string, error) {
 	switch fingerprintAlgorithm {
+	case "http://www.w3.org/2000/09/xmldsig#sha1":
+		fp := sha1.Sum(cert.Raw) //nolint:gosec
+		return fingerprintFormat(fp[:])
 	case "http://www.w3.org/2001/04/xmlenc#sha256":
 		fp := sha256.Sum256(cert.Raw)
 		return fingerprintFormat(fp[:])
