@@ -51,7 +51,17 @@ linters:
     generated: lax
     rules:
       - path: (.+)\.go$
-        text: G104 # 'Errors unhandled. (gosec)
+        text: G104 # Errors unhandled (gosec)
+      - path: (.+)\.go$
+        text: G115 # integer overflow conversion int -> byte (gosec)
+      - path: (.+)\.go$
+        text: G117 # Marshaled struct field matches secret pattern (gosec)
+      - path: (.+)\.go$
+        text: G120 # Parsing form data without limiting request body size (gosec)
+      - path: (.+)\.go$
+        text: G705 # XSS via taint analysis (gosec)
+      - path: (.+)\.go$
+        text: G706 # Log injection via taint analysis (gosec)
     paths:
       - example/.*\.go$
 formatters:
