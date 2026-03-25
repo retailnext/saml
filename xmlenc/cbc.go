@@ -61,7 +61,7 @@ func (e CBC) Encrypt(key interface{}, plaintext []byte, _ []byte) (*etree.Elemen
 
 	plaintext = appendPadding(plaintext, block.BlockSize())
 
-	iv := make([]byte, block.BlockSize())
+	iv := make([]byte, block.BlockSize(), block.BlockSize()+len(plaintext))
 	if _, err := RandReader.Read(iv); err != nil {
 		return nil, err
 	}
